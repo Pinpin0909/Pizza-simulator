@@ -5,6 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Pizzayolo Simulator 🍕</title>
   <link rel="stylesheet" href="style.css" />
+  <script type="importmap">
+  {
+    "imports": {
+      "three":          "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js",
+      "three/addons/":  "https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/"
+    }
+  }
+  </script>
 </head>
 <body>
 
@@ -54,12 +62,8 @@
     <section id="builder-panel">
 
       <div id="pizza-preview">
-        <div id="pizza-plate">
-          <div id="pizza-dough"></div>
-          <div id="pizza-toppings-display"></div>
-          <div id="pizza-emoji-toppings"></div>
-          <span id="pizza-placeholder">Sélectionne des ingrédients !</span>
-        </div>
+        <div id="pizza-canvas"></div>
+        <p id="canvas-hint">🖱 Glisser pour tourner · Molette pour zoomer</p>
       </div>
 
       <div id="selected-summary">
@@ -92,6 +96,6 @@
 
   <div id="overlay" class="hidden"></div>
 
-  <script src="script.js"></script>
+  <script type="module" src="script.js"></script>
 </body>
 </html>
