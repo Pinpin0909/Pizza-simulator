@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pizzayolo Simulator 🍕</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header>
+    <h1>🍕 Pizzayolo Simulator</h1>
+    <p class="subtitle">Compose ta pizza, puis enfourne-la pour découvrir le résultat !</p>
+  </header>
+
+  <main>
+
+    <!-- ── Ingredient panels ── -->
+    <section id="ingredients-panel">
+
+      <div class="category" id="cat-pate">
+        <h2>🥐 Pâte</h2>
+        <p class="cat-hint">Choisissez <strong>1</strong> pâte</p>
+        <div class="ingredient-list" data-category="pate"></div>
+      </div>
+
+      <div class="category" id="cat-base">
+        <h2>🥫 Base</h2>
+        <p class="cat-hint">Choisissez <strong>1</strong> base</p>
+        <div class="ingredient-list" data-category="base"></div>
+      </div>
+
+      <div class="category" id="cat-fromage">
+        <h2>🧀 Fromage</h2>
+        <p class="cat-hint">Choisissez au moins <strong>1</strong> fromage</p>
+        <div class="ingredient-list" data-category="fromage"></div>
+      </div>
+
+      <div class="category" id="cat-garniture">
+        <h2>🫑 Garniture</h2>
+        <p class="cat-hint">Choisissez vos garnitures</p>
+        <div class="ingredient-list" data-category="garniture"></div>
+      </div>
+
+      <div class="category" id="cat-autres">
+        <h2>✨ Autres</h2>
+        <p class="cat-hint">Extras &amp; surprises</p>
+        <div class="ingredient-list" data-category="autres"></div>
+      </div>
+
+    </section>
+
+    <!-- ── Pizza preview + oven ── -->
+    <section id="builder-panel">
+
+      <div id="pizza-preview">
+        <div id="pizza-plate">
+          <div id="pizza-dough"></div>
+          <div id="pizza-toppings-display"></div>
+          <div id="pizza-emoji-toppings"></div>
+          <span id="pizza-placeholder">Sélectionne des ingrédients !</span>
+        </div>
+      </div>
+
+      <div id="selected-summary">
+        <h3>🧾 Ta pizza :</h3>
+        <ul id="selected-list">
+          <li class="empty-msg">Aucun ingrédient sélectionné</li>
+        </ul>
+      </div>
+
+      <div id="oven-area">
+        <button id="bake-btn" disabled>🔥 Enfourner la pizza</button>
+        <button id="reset-btn">🗑️ Recommencer</button>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- ── Result modal ── -->
+  <div id="result-modal" class="hidden">
+    <div id="result-card">
+      <div id="result-animation">🔥</div>
+      <h2 id="result-title"></h2>
+      <div id="result-stars"></div>
+      <p id="result-description"></p>
+      <div id="result-ingredients-recap"></div>
+      <button id="close-result-btn">🍕 Créer une nouvelle pizza</button>
+    </div>
+  </div>
+
+  <div id="overlay" class="hidden"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
