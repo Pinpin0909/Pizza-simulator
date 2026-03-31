@@ -103,16 +103,16 @@ const BASE_COLORS = {
 };
 
 // ── DOM refs ─────────────────────────────────────────────────
-const selectedList      = document.getElementById("selected-list");
-const bakeBtn           = document.getElementById("bake-btn");
-const resetBtn          = document.getElementById("reset-btn");
-const resultModal       = document.getElementById("result-modal");
-const overlay           = document.getElementById("overlay");
-const resultTitle       = document.getElementById("result-title");
-const resultStars       = document.getElementById("result-stars");
-const resultDescription = document.getElementById("result-description");
-const resultRecap       = document.getElementById("result-ingredients-recap");
-const closeResultBtn    = document.getElementById("close-result-btn");
+let selectedList;
+let bakeBtn;
+let resetBtn;
+let resultModal;
+let overlay;
+let resultTitle;
+let resultStars;
+let resultDescription;
+let resultRecap;
+let closeResultBtn;
 
 // ── Three.js state ───────────────────────────────────────────
 let scene, camera, renderer, controls;
@@ -1015,17 +1015,78 @@ function resetGame() {
 }
 
 // ── Event listeners ──────────────────────────────────────────
-bakeBtn.addEventListener("click", bake);
-resetBtn.addEventListener("click", resetGame);
-closeResultBtn.addEventListener("click", resetGame);
-overlay.addEventListener("click", () => {
-  overlay.classList.add("hidden");
-  resultModal.classList.add("hidden");
-  resetBtn.disabled = false;
-  bakeBtn.disabled  = false;
-});
-
 // ── Init ─────────────────────────────────────────────────────
-renderIngredients();
-updateSummary();
-initThreeJS();
+function initialize() {
+  console.log("Pizza Simulator: initializing…");
+
+  // Assign DOM refs
+  selectedList      = document.getElementById("selected-list");
+  bakeBtn           = document.getElementById("bake-btn");
+  resetBtn          = document.getElementById("reset-btn");
+  resultModal       = document.getElementById("result-modal");
+  overlay           = document.getElementById("overlay");
+  resultTitle       = document.getElementById("result-title");
+  resultStars       = document.getElementById("result-stars");
+  resultDescription = document.getElementById("result-description");
+  resultRecap       = document.getElementById("result-ingredients-recap");
+  closeResultBtn    = document.getElementById("close-result-btn");
+
+  // Validate required DOM elements
+  const requiredElements = {
+    "selected-list":              selectedList,
+    "bake-btn":                   bakeBtn,
+    "reset-btn":                  resetBtn,
+    "result-modal":               resultModal,
+    "overlay":                    overlay,
+    "result-title":               resultTitle,
+    "result-stars":               resultStars,
+    "result-description":         resultDescription,
+    "result-ingredients-recap":   resultRecap,
+    "close-result-btn":           closeResultBtn,
+  };
+
+  for (const [id, el] of Object.entries(requiredElements)) {
+    if (!el) {
+      console.error(`Pizza Simulator: required element #${id} not found in the DOM.`);
+      return;
+    }
+  }
+
+  // Attach event listeners
+  bakeBtn.addEventListener("click", bake);
+  resetBtn.addEventListener("click", resetGame);
+  closeResultBtn.addEventListener("click", resetGame);
+  overlay.addEventListener("click", () => {
+    overlay.classList.add("hidden");
+    resultModal.classList.add("hidden");
+    resetBtn.disabled = false;
+    bakeBtn.disabled  = false;
+  });
+
+  // Run initialisation
+  renderIngredients();
+  updateSummary();
+
+  try {
+    initThreeJS();
+    console.log("Pizza Simulator: Three.js initialized successfully.");
+  } catch (err) {
+    console.error("Pizza Simulator: Three.js initialization failed.", err);
+    const container = document.getElementById("pizza-canvas");
+    if (container) {
+      container.textContent = "⚠️ Impossible d'initialiser le rendu 3D. Veuillez utiliser un navigateur compatible WebGL.";
+      container.style.display = "flex";
+      container.style.alignItems = "center";
+      container.style.justifyContent = "center";
+      container.style.padding = "1rem";
+    }
+  }
+
+  console.log("Pizza Simulator: ready.");
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initialize);
+} else {
+  initialize();
+}
